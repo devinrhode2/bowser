@@ -1,0 +1,14 @@
+<script src="http://cdn.sockjs.org/sockjs-0.3.min.js"></script>
+<script src="ext-normalizer.js"></script>
+<script type="text/javascript">
+  var sock = new SockJS('http://bowser.nodester.com/echo');
+  sock.onopen = function() {
+    console.log('open');
+  };
+  sock.onmessage = function(e) {
+    console.log('message', e.data);
+  };
+  sock.onclose = function() {
+    console.log('close');
+  };
+</script>

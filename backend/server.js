@@ -3,8 +3,7 @@
  * Module dependencies.
  */
 
-var express = require('express'),
-    sockjs = require('sockjs');
+var express = require('express');
 
 var app = module.exports = express.createServer();
 
@@ -27,16 +26,31 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+// sockjs
+  var http = require('http');
+  var sockjs = require('sockjs');
+  
+  var echo = sockjs.createServer();
+  echo.on('connection', function(conn) {
+    conn.on('data', function(message) {
+      conn.write(message);
+    });
+    conn.on('close', function() {});
+  });
+  
+  echo.installHandlers(app, {prefix:'/echo'});
+  server.listen(9999, '0.0.0.0');
+
+
 // Routes
-
-app.get('/', function(req, res){
-  res.render('index', { title: 'foo!' })
-});
-
-app.post('/newuid', function(req, res){
-  console.log('request:', req);
-  console.log('response:', res);
-});
+  app.get('/', function(req, res){
+    res.render('index', { title: 'foo!' })
+  });
+  
+  app.post('/newuid', function(req, res){
+    console.log('request:', req);
+    console.log('response:', res);
+  });
 
 app.listen(19803);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
