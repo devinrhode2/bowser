@@ -6,7 +6,9 @@ if (uid && uid.length > 3) {
             Math.floor((Math.random()*Math.pow(10,16)) + 1).toString();
   localStorage.setItem('id', uid);
 }
-POST('http://bowser.nodester.com/newuid', function PostingUid(){
+POST('http://bowser.nodester.com/newuid', 'uid=' + uid, function PostingUid(){
   
 });
-
+var browserButtonOnclick = function browserButtonOnclick(){
+  
+};
